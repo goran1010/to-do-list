@@ -26,17 +26,31 @@ main {
   flex-direction: column;
 }
 aside {
-  flex: 1;
+  flex: 2;
+}
+.all-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
 .all-projects > div {
-  border: 1px solid black;
+  box-shadow: 0 0 5px black;
   padding: 5px;
+  border-radius: 5px;
   cursor: pointer;
 }
+.all-to-do {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  padding: 5px;
+}
 .all-to-do > div {
-  border: 1px solid black;
+  box-shadow: 0 0 5px black;
   padding: 5px;
   cursor: pointer;
+  border-radius: 5px;
 }
 .all-projects,
 .all-to-do {
@@ -44,5 +58,20 @@ aside {
   padding: 5px;
 }
 main {
-  flex: 4;
+  flex: 5;
+}
+button {
+  background-color: rgb(74, 185, 74);
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 3px;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+}
+.remove-storage,
+.remove-to-do,
+.remove-project {
+  background-color: red;
 }

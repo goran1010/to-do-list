@@ -1,40 +1,37 @@
 import renderToDo from "./renderToDo";
+import { saveToStorage } from "./saveToStorage";
 
 export function renderProjects(allProjects) {
+  if (!document.querySelector(`.remove-storage`)) {
+    const removeStorage = document.createElement(`button`);
+    removeStorage.classList.add("remove-storage");
+    removeStorage.textContent = "Remove Storage";
+    document.querySelector(`.project`).appendChild(removeStorage);
+    removeStorage.addEventListener(`click`, () => {
+      localStorage.removeItem("My-projects");
+      removeStorage.remove();
+    });
+  }
+
   const container = document.querySelector(`.all-projects`);
   container.innerHTML = ``;
   const allToDo = document.querySelector(".all-to-do");
   allToDo.innerHTML = ``;
   allProjects.forEach((project, index) => {
     const div = document.createElement(`div`);
-    div.textContent = `${project.ID} ${project.name}`;
-
+    div.textContent = `${project.name}`;
     const removeProject = document.createElement(`button`);
+    removeProject.textContent = "Delete";
+    removeProject.classList.add(`remove-project`);
+
     removeProject.addEventListener(`click`, () => {
       allProjects.splice(index, 1);
       renderProjects(allProjects);
+      saveToStorage();
     });
-    removeProject.textContent = "Delete";
 
     div.setAttribute(`data-project-ID`, project.ID);
     div.addEventListener(`click`, () => {
-      const cont = document.querySelector(".to-do");
-      cont.innerHTML = ``;
-      const label = document.createElement(`label`);
-      const input = document.createElement(`input`);
-      const button = document.createElement(`button`);
-      label.setAttribute(`for`, "add-to-do");
-      label.textContent = "To do text";
-      input.setAttribute(`id`, "add-to-do");
-      button.setAttribute(`class`, "add-to-do");
-      button.textContent = "Add to do";
-
-      button.addEventListener(`click`, () => {
-        project.createToDo(input);
-        renderToDo(project, allToDo);
-      });
-
-      cont.append(label, input, button);
       renderToDo(project, allToDo);
     });
     div.appendChild(removeProject);
